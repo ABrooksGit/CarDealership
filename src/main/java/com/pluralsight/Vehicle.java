@@ -1,5 +1,7 @@
 package com.pluralsight;
 
+import java.text.NumberFormat;
+
 public class Vehicle {
 
     private int vin;
@@ -52,5 +54,36 @@ public class Vehicle {
 
     public double getPrice() {
         return price;
+    }
+
+    @Override
+    public String toString() {
+
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
+        String dollarSign = currencyFormatter.format(price);
+
+        return vin + "|" +
+                year + "|"+
+                make + "|" +
+                model + "|" +
+                vehicleType + "|" +
+                color + "|" +
+                odometer + "|" +
+                dollarSign;
+    }
+
+
+    public String toStringLog() {
+
+
+
+        return vin + "|" +
+                year + "|"+
+                make + "|" +
+                model + "|" +
+                vehicleType + "|" +
+                color + "|" +
+                odometer + "|" +
+                price;
     }
 }

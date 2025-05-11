@@ -79,7 +79,6 @@ public class Console {
 
     public LocalDate promptForDate(String prompt) {
         LocalDate result = null;
-//        LocalDate startDate = null;
         boolean hasResult = false;
 
         while (!hasResult) {
@@ -92,7 +91,7 @@ public class Console {
                 }
                 hasResult = true;
             } catch (DateTimeParseException e) {
-                System.out.println(ColorCodes.RED +"Incorrect date format. Please use (YYYY-MM-DD) or leave blank to skip." + ColorCodes.RESET);
+                System.out.println(ColorCodes.RED +"Incorrect date format. Please use (YYYY) or leave blank" + ColorCodes.RESET);
             }
         }
 

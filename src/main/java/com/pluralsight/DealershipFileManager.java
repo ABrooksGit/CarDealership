@@ -1,42 +1,42 @@
 package com.pluralsight;
 
 import java.io.*;
+
 import java.util.regex.Pattern;
 
 public class DealershipFileManager {
 
-   private static Dealership dealership;
-   private static String fileName = "dealership.csv";
+
+    private static String fileName = "inventory.csv";
 
 
     public static Dealership getDealership() {
-        return dealership;
-    }
 
-
-    public static void setDealership(Dealership dealership) {
-        DealershipFileManager.dealership = dealership;
-    }
-
-
-
-
-    public static void readLog(){
-
-        try{
+        try {
+            Dealership dealership = null;
             FileReader dealerShipLog = new FileReader(fileName);
             BufferedReader bufferedReader = new BufferedReader(dealerShipLog);
 
-            for (Vehicle v : getDealership().getAllVehicles()){
+
+            String dealerShipCsv;
+            dealerShipCsv = bufferedReader.readLine();
+
+            if (dealerShipCsv != null) {
+                String[] dealershipCsvParts = dealerShipCsv.split(Pattern.quote("|"));
+                String dealerID = dealershipCsvParts[0];
+                String dealerName = dealershipCsvParts[1];
+                String dealerAddress = dealershipCsvParts[2];
+                dealership = new Dealership(dealerID, dealerName, dealerAddress);
+            }
 
                 String inputString;
 
-
-                while ((inputString = bufferedReader.readLine()) != null){
-                    if(inputString.trim().isEmpty()){
+                while ((inputString = bufferedReader.readLine()) != null) {
+                    if (inputString.trim().isEmpty()) {
                         continue;
                     }
-                   String[] parts =  inputString.split(Pattern.quote("|"));
+
+                    String[] parts = inputString.split(Pattern.quote("|"));
 
                     int vin = Integer.parseInt(parts[0]);
                     int year = Integer.parseInt(parts[1]);
@@ -47,49 +47,41 @@ public class DealershipFileManager {
                     int odometer = Integer.parseInt(parts[6]);
                     double price = Double.parseDouble(parts[7]);
 
-                    Vehicle vehicle = new Vehicle(vin, year, make, model, vehicleType,color,odometer,price);
-                    Dealership.addVehicle(vehicle);
-
-
-
-
+                if(dealership != null){
+                    dealership.addVehicle(new Vehicle(vin, year, make, model, vehicleType, color, odometer, price));
                 }
+
             }
-
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+                return dealership;
+            } catch(IOException e){
+                throw new RuntimeException(e);
+            }
         }
 
 
-    }
+
+    public static void saveDealership(Dealership dealership) {
+
+            try {
+                FileWriter dealerShipLog = new FileWriter(fileName, true);
+                BufferedWriter bufferedWriter = new BufferedWriter(dealerShipLog);
+
+
+                Vehicle v = dealership.getAllVehicles().getLast();
+                bufferedWriter.write("\n" + v.toStringLog());
 
 
 
+                bufferedWriter.close();
 
+            } catch (IOException e) {
 
-
-    public static void writeToLog(){
-
-        try{
-            FileWriter dealerShipLog = new FileWriter(fileName, true);
-            BufferedWriter bufferedWriter = new BufferedWriter(dealerShipLog);
-
-            for(Vehicle vehicle : dealership.getAllVehicles()) {
-
-
+                throw new RuntimeException(e);
             }
 
 
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-
     }
-
-
 
 
 }
+
