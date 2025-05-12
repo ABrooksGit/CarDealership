@@ -31,6 +31,17 @@ public class Dealership {
 
     }
 
+    public ArrayList<Vehicle> getVehicleByVinNumber(int vin) {
+        ArrayList<Vehicle> endResult = new ArrayList<>();
+        for (Vehicle v : inventory) {
+            if (v.getVin() == vin) {
+                endResult.add(v);
+            }
+        }
+        return  endResult;
+    }
+
+
 
     public ArrayList<Vehicle> getVehicleByPrice(double min , double max){
         ArrayList<Vehicle>endResult = new ArrayList<>();
@@ -120,6 +131,20 @@ public class Dealership {
 
         inventory.remove(vehicle);
     }
+
+
+    public String toStringLog() {
+
+
+
+        return  this.name + "|" +
+                this.address + "|"+
+                this.phone + "|";
+
+    }
+
+
+
 
 }
 

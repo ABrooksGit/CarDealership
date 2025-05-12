@@ -23,10 +23,11 @@ public class DealershipFileManager {
 
             if (dealerShipCsv != null) {
                 String[] dealershipCsvParts = dealerShipCsv.split(Pattern.quote("|"));
-                String dealerID = dealershipCsvParts[0];
-                String dealerName = dealershipCsvParts[1];
-                String dealerAddress = dealershipCsvParts[2];
-                dealership = new Dealership(dealerID, dealerName, dealerAddress);
+                String dealerName = dealershipCsvParts[0];
+                String dealerAddress = dealershipCsvParts[1];
+                String dealerPhone = dealershipCsvParts[2];
+
+                dealership = new Dealership(dealerName, dealerAddress,dealerPhone);
             }
 
                 String inputString;
@@ -63,14 +64,14 @@ public class DealershipFileManager {
     public static void saveDealership(Dealership dealership) {
 
             try {
-                FileWriter dealerShipLog = new FileWriter(fileName, true);
+                FileWriter dealerShipLog = new FileWriter(fileName, false);
                 BufferedWriter bufferedWriter = new BufferedWriter(dealerShipLog);
 
+                bufferedWriter.write(dealership.toStringLog());
 
-                Vehicle v = dealership.getAllVehicles().getLast();
-                bufferedWriter.write("\n" + v.toStringLog());
-
-
+                for(Vehicle v : dealership.getAllVehicles()){
+                    bufferedWriter.write("\n" + v.toStringLog());
+                }
 
                 bufferedWriter.close();
 

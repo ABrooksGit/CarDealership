@@ -111,13 +111,9 @@ public class UserInterface {
 
 
     public static void processGetByYearRequest(){
-
-
-
             int year = console.promptForInt("Enter in a year: ");
-
-
             ArrayList<Vehicle> yearResult = d.getVehicleByYear(year);
+
 
             if(yearResult.isEmpty()){
                 System.out.println("No Vehicle found for " + year);
@@ -138,8 +134,8 @@ public class UserInterface {
     public static void processGetByColorRequest(){
 
         String color = console.promptForString("Enter in a color: ");
-
         ArrayList<Vehicle> colorResult = d.getVehicleByColor(color);
+
 
         if(colorResult.isEmpty()){
             System.out.println("No Vehicles of this color: " + color);
@@ -221,12 +217,31 @@ public class UserInterface {
 
     public static void processRemoveVehicleRequest(){
 
-        for(Vehicle v : d.getAllVehicles()){
             System.out.println("Which Vehicle do you want to Remove?: ");
-            System.out.println(v.toString());
-            String choice = console.promptForString("Enter Vehicle Name: ");
+            int vin = console.promptForInt("Enter Vehicle's Vin number: ");
 
-        }
+            ArrayList<Vehicle> choiceResult = d.getVehicleByVinNumber(vin);
+
+            if(choiceResult.isEmpty()){
+                System.out.println("No Vehicle....");
+
+            } else {
+                for(Vehicle vehicle : choiceResult){
+                    d.removeVehicle(vehicle);
+                    System.out.println(choiceResult + " Was Removed....");
+
+                }
+            }
+            DealershipFileManager.saveDealership(d);
+
+
+
+
+
+
+
+
+
 
 
 
