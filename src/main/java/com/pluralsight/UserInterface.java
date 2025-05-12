@@ -10,9 +10,9 @@ public class UserInterface {
     private static Console console = new Console();
 
 
-
     public static void display(){
-       d  = DealershipFileManager.getDealership();
+        d  = DealershipFileManager.getDealership();
+
 
         int input;
         String homeScreenPrompt = """
@@ -75,6 +75,7 @@ public class UserInterface {
         double max = console.promptForDouble("Input the maximum price: ");
 
         ArrayList<Vehicle> priceResult = d.getVehicleByPrice(min, max);
+
 
         if (priceResult.isEmpty()) {
             System.out.println("No Vehicles found within price range");

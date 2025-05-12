@@ -63,14 +63,16 @@ public class Vehicle {
 
         return String.format(
                 "%-7s %-8s %-12s %-15s %-12s %-10s %-10s %-11s",
-                vin, year, make, model, vehicleType, color, odometer, dollarSign
+                vin, year, make, model, vehicleType, color, odometer, ColorCodes.BLUE + dollarSign + ColorCodes.RESET
         );
     }
 
 
     public static String getFormattedHeader() {
-        return "\n  VIN      YEAR       MAKE         MODEL       VEHICLE TYPE   COLOR     ODOMETER   PRICE ($)\n"
-                + "-------|--------|------------|---------------|------------|----------|----------|-----------";
+        return """
+                
+                  VIN      YEAR       MAKE         MODEL       VEHICLE TYPE   COLOR     ODOMETER   PRICE ($)
+                -------|--------|------------|---------------|------------|----------|----------|-----------""";
     }
 
 

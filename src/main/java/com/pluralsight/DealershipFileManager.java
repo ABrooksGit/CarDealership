@@ -64,7 +64,7 @@ public class DealershipFileManager {
     public static void saveDealership(Dealership dealership) {
 
             try {
-                FileWriter dealerShipLog = new FileWriter(fileName, false);
+                FileWriter dealerShipLog = new FileWriter(fileName);
                 BufferedWriter bufferedWriter = new BufferedWriter(dealerShipLog);
 
                 bufferedWriter.write(dealership.toStringLog());
