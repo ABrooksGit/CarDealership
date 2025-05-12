@@ -15,18 +15,19 @@ public class UserInterface {
        d  = DealershipFileManager.getDealership();
 
         int input;
-        String homeScreenPrompt = "What do you want to do: \n" +
-                " 1 - Find vehicles within a price range \n" +
-                " 2 - Find vehicles by make / model \n" +
-                " 3 -  Find vehicles by year range\n" +
-                " 4 -  Find vehicles by color\n" +
-                " 5 -  Find vehicles by mileage range\n" +
-                " 6 -  Find vehicles by type (car, truck, SUV, van)\n" +
-                " 7 - List ALL vehicles\n"+
-                " 8 - Add a vehicle\n"+
-                " 9 - Remove a vehicle\n"+
-                " 0 - Quit\n"+
-                "Enter your command(number 1-9): ";
+        String homeScreenPrompt = """
+                What do you want to do:\s
+                 1 - Find vehicles within a price range\s
+                 2 - Find vehicles by make / model\s
+                 3 -  Find vehicles by year range
+                 4 -  Find vehicles by color
+                 5 -  Find vehicles by mileage range
+                 6 -  Find vehicles by type (car, truck, SUV, van)
+                 7 - List ALL vehicles
+                 8 - Add a vehicle
+                 9 - Remove a vehicle
+                 0 - Quit
+                Enter your command(number 1-9):\s""";
 
 
         do{
@@ -69,25 +70,26 @@ public class UserInterface {
 
     public static void processGetByPriceRequest() {
 
-        while (true) {
-            double min = console.promptForDouble("Input the minimum price: ");
-            double max = console.promptForDouble("Input the maximum price: ");
 
-            ArrayList<Vehicle> priceResult = d.getVehicleByPrice(min, max);
+        double min = console.promptForDouble("Input the minimum price: ");
+        double max = console.promptForDouble("Input the maximum price: ");
 
-            if (priceResult.isEmpty()) {
-                System.out.println("No Vehicles found within price range");
-            } else {
-                System.out.println("These are the vehicles found within" + " " +  min + " and " + max);
-                for (Vehicle v : priceResult) {
-                    System.out.println(v.toString());
-                }
+        ArrayList<Vehicle> priceResult = d.getVehicleByPrice(min, max);
+
+        if (priceResult.isEmpty()) {
+            System.out.println("No Vehicles found within price range");
+        } else {
+            System.out.println("These are the vehicles found within" + " " + min + " and " + max);
+            System.out.println(Vehicle.getFormattedHeader());
+            for (Vehicle v : priceResult) {
+                System.out.println(v.toString());
             }
-
-            return;
         }
 
+
     }
+
+
 
 
     public static void processGetByMakeModelRequest(){
@@ -102,6 +104,7 @@ public class UserInterface {
 
         } else {
             System.out.println("These are the Vehicles found for this " + make + " " + model);
+            System.out.println(Vehicle.getFormattedHeader());
             for(Vehicle v : makeModelResult){
                 System.out.println(v.toString());
             }
@@ -120,6 +123,7 @@ public class UserInterface {
 
             } else {
                 System.out.println("These Vehicles are inside of this year: " + year);
+                System.out.println(Vehicle.getFormattedHeader());
                 for(Vehicle v : yearResult){
                     System.out.println(v.toString());
                 }
@@ -141,6 +145,7 @@ public class UserInterface {
             System.out.println("No Vehicles of this color: " + color);
         } else {
             System.out.println("These are the Vehicles of this color: " + color);
+            System.out.println(Vehicle.getFormattedHeader());
             for(Vehicle v : colorResult){
                 System.out.println(v.toString());
             }
@@ -160,6 +165,7 @@ public class UserInterface {
             System.out.println("No Vehicles have a mileage between these two numbers " + startingMileage + " " + endingMileage);
         } else {
             System.out.println("These Vehicles have a mileage between " + startingMileage + " " + endingMileage);
+            System.out.println(Vehicle.getFormattedHeader());
             for(Vehicle v : mileageResult){
                 System.out.println(v.toString());
             }
@@ -178,6 +184,7 @@ public class UserInterface {
             System.out.println("There are no Vehicles with the type of " + type);
         } else {
             System.out.println("These are the Vehicles with the type of " + type);
+            System.out.println(Vehicle.getFormattedHeader());
             for(Vehicle v : typeResult){
                 System.out.println(v.toString());
             }
@@ -188,6 +195,7 @@ public class UserInterface {
 
     public static void processGetByAllVehiclesRequest(){
         System.out.println("Here are all the vehicles");
+        System.out.println(Vehicle.getFormattedHeader());
 
         for(Vehicle v : d.getAllVehicles()){
             System.out.println(v.toString());
