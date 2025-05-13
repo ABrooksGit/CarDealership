@@ -6,13 +6,35 @@ import java.util.ArrayList;
 public class UserInterface {
 
 
-    private static Dealership d;
-    private static Console console = new Console();
+    private  Dealership d;
+    private  Console console = new Console();
 
 
-    public static void display(){
+
+
+
+    private  void init(){
         d  = DealershipFileManager.getDealership();
+    }
 
+    public void displayMenu() {
+        init();
+
+        display();
+    }
+
+
+
+    private void displayVehicles(ArrayList<Vehicle> vehicles){
+
+            for (Vehicle v : vehicles)
+                System.out.println(v.toString());
+
+    }
+
+
+
+    private void display(){
 
         int input;
         String homeScreenPrompt = """
@@ -62,14 +84,10 @@ public class UserInterface {
 
         } while(input != 0);
 
-
-
-
     }
 
 
-    public static void processGetByPriceRequest() {
-
+    private  void processGetByPriceRequest() {
 
         double min = console.promptForDouble("Input the minimum price: ");
         double max = console.promptForDouble("Input the maximum price: ");
@@ -82,18 +100,14 @@ public class UserInterface {
         } else {
             System.out.println("These are the vehicles found within" + " " + min + " and " + max);
             System.out.println(Vehicle.getFormattedHeader());
-            for (Vehicle v : priceResult) {
-                System.out.println(v.toString());
+            displayVehicles(priceResult);
+
             }
         }
 
 
-    }
 
-
-
-
-    public static void processGetByMakeModelRequest(){
+    private  void processGetByMakeModelRequest(){
 
         String make = console.promptForString("Input Make you want to search for: ");
         String model = console.promptForString("Input Model you want to search for: ");
@@ -102,19 +116,16 @@ public class UserInterface {
 
         if(makeModelResult.isEmpty()){
             System.out.println("No Vehicles found within " +  make + " " + model);
-
         } else {
             System.out.println("These are the Vehicles found for this " + make + " " + model);
             System.out.println(Vehicle.getFormattedHeader());
-            for(Vehicle v : makeModelResult){
-                System.out.println(v.toString());
-            }
+            displayVehicles(makeModelResult);
         }
 
     }
 
 
-    public static void processGetByYearRequest(){
+    private  void processGetByYearRequest(){
             int year = console.promptForInt("Enter in a year: ");
             ArrayList<Vehicle> yearResult = d.getVehicleByYear(year);
 
@@ -125,18 +136,14 @@ public class UserInterface {
             } else {
                 System.out.println("These Vehicles are inside of this year: " + year);
                 System.out.println(Vehicle.getFormattedHeader());
-                for(Vehicle v : yearResult){
-                    System.out.println(v.toString());
-                }
+               displayVehicles(yearResult);
             }
 
 
-
-
-
-
     }
-    public static void processGetByColorRequest(){
+
+
+    private void processGetByColorRequest(){
 
         String color = console.promptForString("Enter in a color: ");
         ArrayList<Vehicle> colorResult = d.getVehicleByColor(color);
@@ -147,15 +154,14 @@ public class UserInterface {
         } else {
             System.out.println("These are the Vehicles of this color: " + color);
             System.out.println(Vehicle.getFormattedHeader());
-            for(Vehicle v : colorResult){
-                System.out.println(v.toString());
-            }
+            displayVehicles(colorResult);
         }
 
-
-
     }
-    public static void processGetByMileageRequest(){
+
+
+
+    private  void processGetByMileageRequest(){
 
         int startingMileage = console.promptForInt("Enter in the starting Mileage you want to search: ");
         int endingMileage = console.promptForInt("Enter in the ending Mileage you want to search: ");
@@ -167,16 +173,15 @@ public class UserInterface {
         } else {
             System.out.println("These Vehicles have a mileage between " + startingMileage + " " + endingMileage);
             System.out.println(Vehicle.getFormattedHeader());
-            for(Vehicle v : mileageResult){
-                System.out.println(v.toString());
-            }
+            displayVehicles(mileageResult);
         }
-
-
 
     }
 
-    public static void processGetByVehicleTypeRequest(){
+
+
+
+    private void processGetByVehicleTypeRequest(){
         String type = console.promptForString("Enter Vehicle Type ");
 
         ArrayList<Vehicle> typeResult = d.getVehicleByType(type);
@@ -186,26 +191,23 @@ public class UserInterface {
         } else {
             System.out.println("These are the Vehicles with the type of " + type);
             System.out.println(Vehicle.getFormattedHeader());
-            for(Vehicle v : typeResult){
-                System.out.println(v.toString());
-            }
+            displayVehicles(typeResult);
         }
-
 
     }
 
-    public static void processGetByAllVehiclesRequest(){
+
+
+    private  void processGetByAllVehiclesRequest() {
         System.out.println("Here are all the vehicles");
         System.out.println(Vehicle.getFormattedHeader());
 
-        for(Vehicle v : d.getAllVehicles()){
-            System.out.println(v.toString());
-        }
+        displayVehicles(d.getAllVehicles());
 
     }
 
 
-    public static void processAddVehicleRequest(){
+    private void processAddVehicleRequest(){
         System.out.println("Enter vehicle information");
 
         int vin = console.promptForInt("Enter VIN: ");
@@ -224,7 +226,7 @@ public class UserInterface {
     }
 
 
-    public static void processRemoveVehicleRequest(){
+    private void processRemoveVehicleRequest(){
 
             System.out.println("Which Vehicle do you want to Remove?: ");
             int vin = console.promptForInt("Enter Vehicle's Vin number: ");
@@ -242,18 +244,6 @@ public class UserInterface {
                 }
             }
             DealershipFileManager.saveDealership(d);
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 
