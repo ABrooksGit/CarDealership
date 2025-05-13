@@ -71,7 +71,7 @@ public class UserInterface {
                 break;
                 case 8: processAddVehicleRequest();
                 break;
-                case 9: processRemoveVehicleRequest();
+                case 9: startProcessToRemoveVehicle();
                 break;
                 case 0:
                     System.out.println("Quitting...");
@@ -117,7 +117,7 @@ public class UserInterface {
         if(makeModelResult.isEmpty()){
             System.out.println("No Vehicles found within " +  make + " " + model);
         } else {
-            System.out.println("These are the Vehicles found for this " + make + " " + model);
+            System.out.println("These are the Vehicles found within " + make + " " + model);
             System.out.println(Vehicle.getFormattedHeader());
             displayVehicles(makeModelResult);
         }
@@ -126,17 +126,20 @@ public class UserInterface {
 
 
     private  void processGetByYearRequest(){
-            int year = console.promptForInt("Enter in a year: ");
-            ArrayList<Vehicle> yearResult = d.getVehicleByYear(year);
+            int minYear = console.promptForInt("Enter in the minimum year: ");
+            int maxYear = console.promptForInt("Enter in the maximum year: ");
+            ArrayList<Vehicle> yearResult = d.getVehicleByYear(minYear, maxYear);
 
 
             if(yearResult.isEmpty()){
-                System.out.println("No Vehicle found for " + year);
+                System.out.println("No Vehicle found for " + minYear + " " + maxYear);
 
             } else {
-                System.out.println("These Vehicles are inside of this year: " + year);
+                System.out.println("These Vehicles are inside of this year: " + yearResult);
                 System.out.println(Vehicle.getFormattedHeader());
-               displayVehicles(yearResult);
+
+
+                displayVehicles(yearResult);
             }
 
 
@@ -191,6 +194,7 @@ public class UserInterface {
         } else {
             System.out.println("These are the Vehicles with the type of " + type);
             System.out.println(Vehicle.getFormattedHeader());
+
             displayVehicles(typeResult);
         }
 
@@ -226,12 +230,34 @@ public class UserInterface {
     }
 
 
+    private void startProcessToRemoveVehicle() {
+        int choice;
+        do {
+
+
+            choice = console.promptForInt("Do you want to check the Vehicle list? (1 or 2 ):   ");
+                switch (choice) {
+                    case 1:
+                        displayVehicles(d.getAllVehicles());
+                        break;
+                    case 2:
+                        processRemoveVehicleRequest();
+                        break;
+                }
+
+
+        } while (choice != 2);
+    }
+
+
+
     private void processRemoveVehicleRequest(){
 
-            System.out.println("Which Vehicle do you want to Remove?: ");
-            int vin = console.promptForInt("Enter Vehicle's Vin number: ");
+    System.out.println("Which Vehicle do you want to Remove?: ");
+        int vin = console.promptForInt("Enter VIN: ");
 
             ArrayList<Vehicle> choiceResult = d.getVehicleByVinNumber(vin);
+
 
             if(choiceResult.isEmpty()){
                 System.out.println("No Vehicle....");
@@ -240,7 +266,6 @@ public class UserInterface {
                 for(Vehicle vehicle : choiceResult){
                     d.removeVehicle(vehicle);
                     System.out.println(choiceResult + " Was Removed....");
-
                 }
             }
             DealershipFileManager.saveDealership(d);

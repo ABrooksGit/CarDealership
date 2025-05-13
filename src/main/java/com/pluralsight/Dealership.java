@@ -71,10 +71,10 @@ public class Dealership {
 
 
     }
-    public ArrayList<Vehicle> getVehicleByYear(int year){
+    public ArrayList<Vehicle> getVehicleByYear(int min , int max){
         ArrayList<Vehicle>endResult = new ArrayList<>();
         for ( Vehicle v : inventory){
-            if(v.getYear() == year){
+            if(v.getYear() >= min && v.getYear() <= max ){
                 endResult.add(v);
             }
         }
@@ -123,6 +123,7 @@ public class Dealership {
     public void addVehicle(Vehicle vehicle){
 
         inventory.add(vehicle);
+
 
 
     }
