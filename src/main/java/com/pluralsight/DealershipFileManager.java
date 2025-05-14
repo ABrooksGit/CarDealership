@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 public class DealershipFileManager {
 
 
-    private static String fileName = "inventory.csv";
+    private final static String fileName = "inventory.csv";
 
 
     public static Dealership getDealership() {

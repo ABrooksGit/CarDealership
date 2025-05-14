@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 
 public class Dealership {
-    private String name;
-    private String address;
-    private String phone;
+    private final String name;
+    private final String address;
+    private final String phone;
 
-    private ArrayList<Vehicle> inventory;
+    private final ArrayList<Vehicle> inventory;
 
 
     public String getName() {

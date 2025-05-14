@@ -3,32 +3,25 @@ package com.pluralsight;
 
 public class SalesContract extends Contract {
 
-    private Vehicle v;
-    private double salesTax =  0.05;
-    private double recordingFee = 100 ;
+
+    private double salesTax;
+    private double recordingFee;
     private double processingFee;
     private boolean finance;
 
-
-    public SalesContract(String date, String customerName, String customerEmail, String vehicleSold, double totalPrice, double monthlyPayment, Vehicle v, double salesTax, double recordingFee, double processingFee, boolean finance) {
-        super(date, customerName, customerEmail, vehicleSold, totalPrice, monthlyPayment);
-        this.v = v;
-        this.salesTax = salesTax;
-        this.recordingFee = recordingFee;
-        this.processingFee = processingFee;
+    public SalesContract(String date, String customerName, String customerEmail, Vehicle vehicle, double processingFee, boolean finance) {
+        super("Sales", date, customerName, customerEmail, vehicle);
+        this.salesTax = 0.05;
+        this.recordingFee = 100;
         this.finance = finance;
+
+        if (processingFee < 10000) {
+            this.processingFee = 295;
+        } else {
+            this.processingFee = 495;
+        }
+
     }
-
-
-    public Vehicle getV() {
-        return v;
-    }
-
-    public void setV(Vehicle v) {
-        this.v = v;
-    }
-
-
 
     public void setSalesTax(double salesTax) {
         this.salesTax = salesTax;
@@ -47,6 +40,7 @@ public class SalesContract extends Contract {
     }
 
     public double getSalesTax() {
+
         return salesTax;
     }
 
@@ -65,15 +59,59 @@ public class SalesContract extends Contract {
 
     @Override
     public double getTotalPrice() {
-        double totalVehiclePrice = v.getPrice();
+        double totalVehiclePrice = getVehicle().getPrice();
         double salesTax = totalVehiclePrice * this.salesTax;
 
-        return totalVehiclePrice + salesTax + this.recordingFee;
+        if(totalVehiclePrice < 10000 ){
+            this.processingFee = 295;
+
+        } else {
+            this.processingFee = 495;
+        }
+
+
+        return totalVehiclePrice + salesTax + this.recordingFee + this.processingFee;
     }
 
     @Override
     public double getMonthlyPayment() {
 
-        return 0;
+        if(!isFinance()){
+            return 0;
+        }
+
+        int loanLength;
+        double loan = getTotalPrice();
+        double loanInterest;
+
+        if(getVehicle().getPrice() >= 10000){
+            loanInterest = 0.0425;
+            loanLength = 48; //48 months
+
+
+        } else {
+            loanInterest = 0.0525;
+            loanLength = 24; // 24 months
+        }
+
+        double monthlyRate = loan * loanInterest / 12;
+        double paymentDivision = loan / loanLength;
+
+        return monthlyRate + paymentDivision; // MonthlyPayment
+
     }
+
+
+
+    @Override
+    public String toString() {
+        return String.format("SALE|%s|%s|%s|%s|%s|%s|%s|%s|%.2f|%.2f",
+                getDate(), getCustomerName(), getCustomerEmail(),
+                getVehicle(), salesTax, recordingFee, processingFee,
+                finance, getTotalPrice(), getMonthlyPayment());
+    }
+
+
+
+
 }
