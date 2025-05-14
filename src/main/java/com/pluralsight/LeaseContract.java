@@ -1,14 +1,16 @@
 package com.pluralsight;
 
+import java.text.NumberFormat;
+
 public class LeaseContract extends Contract {
 
     private double expectedEndingValue;
     private double leaseFee;
 
-    public LeaseContract(String date, String customerName, String customerEmail, Vehicle vehicle, double totalVehiclePrice, double originalPrice ) {
+    public LeaseContract(String date, String customerName, String customerEmail, Vehicle vehicle, double totalVehiclePrice, double originalPrice) {
         super("Lease", date, customerName, customerEmail, vehicle);
         this.expectedEndingValue = totalVehiclePrice * .5;
-        this.leaseFee = originalPrice *.07;
+        this.leaseFee = originalPrice * .07;
     }
 
     public double getExpectedEndingValue() {
@@ -34,27 +36,21 @@ public class LeaseContract extends Contract {
 
         double originalPrice = getVehicle().getPrice();
 
-       this.expectedEndingValue = totalVehiclePrice * .5;
+        this.expectedEndingValue = totalVehiclePrice * .5;
 
 
-       this.leaseFee = originalPrice *.07;
+        this.leaseFee = originalPrice * .07;
 
-       return totalVehiclePrice +  leaseFee - expectedEndingValue;
-
-
-
-
+        return totalVehiclePrice + leaseFee - expectedEndingValue;
 
 
     }
-
 
 
     @Override
     public double getMonthlyPayment() {
 
         double totalVehiclePrice = getVehicle().getPrice();
-
 
 
         double financeAmount = totalVehiclePrice - expectedEndingValue;
@@ -69,15 +65,40 @@ public class LeaseContract extends Contract {
 
         double interest = financeAmount * monthlyInterestRate;
 
-         return (financeAmount + interest) / financedLease;
+        return (financeAmount + interest) / financedLease;
 
     }
 
     @Override
     public String toString() {
-        return String.format("LEASE|%s|%s|%s|%s|%s|%.2f",
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
+        String dollarSign = currencyFormatter.format(getTotalPrice());
+
+        return String.format("LEASE %-7s  %-8s %-12s %-15s %-12s %-18.2f",
                 getDate(), getCustomerName(), getCustomerEmail(),
-                getVehicle(), getTotalPrice(), getMonthlyPayment());
+                getVehicle(), dollarSign, getMonthlyPayment());
     }
 
+
+
+
+    public String toStringLog() {
+        return String.format("LEASE|%s|%s|%s|%s|%s|%.2f",
+                getDate(), getCustomerName(), getCustomerEmail(),
+                getVehicle().toStringLog(), getTotalPrice(), getMonthlyPayment());
+    }
+
+
+
+    public static String getFormattedHeader() {
+        return """
+                 Date    Name       Email         Vehicles    Total Price   Monthly payment
+                 -------|--------|------------|---------------|------------|------------------|
+                """;
+    }
 }
+
+
+
+
+

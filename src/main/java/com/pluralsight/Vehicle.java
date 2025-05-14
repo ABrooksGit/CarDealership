@@ -56,16 +56,18 @@ public class Vehicle {
         return price;
     }
 
-    @Override
+
     public String toString() {
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
         String dollarSign = currencyFormatter.format(price);
 
         return String.format(
                 "%-7s %-8s %-12s %-15s %-12s %-10s %-10s %-11s",
-                vin, year, make, model, vehicleType, color, odometer, ColorCodes.BLUE + dollarSign + ColorCodes.RESET
+                vin, year, make, model, vehicleType, color, odometer, dollarSign
         );
     }
+
+
 
 
     public static String getFormattedHeader() {
@@ -78,17 +80,7 @@ public class Vehicle {
 
 
     public String toStringLog() {
-
-
-
-        return vin + "|" +
-                year + "|"+
-                make + "|" +
-                model + "|" +
-                vehicleType + "|" +
-                color + "|" +
-                odometer + "|" +
-                price;
+        return String.format("%s|%s|%s|%s|%s|%s|%s|%.2f" ,vin, year, make, model, vehicleType, color, odometer, price);
     }
 
 

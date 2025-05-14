@@ -37,6 +37,13 @@ public class UserInterface {
 
     }
 
+    private void displayContracts(Contract contracts){
+
+        for (int i = 0; i < 1; i++)
+            System.out.println(c);
+
+
+    }
 
 
     private void display(){
@@ -300,7 +307,12 @@ public class UserInterface {
 
 
         Vehicle vehicle = new Vehicle(vin, year, make, model, type, color, odometer, price);
+
+
         c = new LeaseContract(date, name, email, vehicle, vehicle.getPrice(), vehicle.getPrice());
+        displayContracts(c);
+
+
         ContractFileManager.saveContracts(c);
     }
 
@@ -324,6 +336,7 @@ public class UserInterface {
         boolean financeSelected = (finance == 1);
         Vehicle vehicle = new Vehicle(vin, year, make, model, type, color, odometer, price);
         c = new SalesContract(date, name, email, vehicle, vehicle.getPrice(), financeSelected);
+        displayContracts(c);
         ContractFileManager.saveContracts(c);
 
 

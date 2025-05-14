@@ -81,9 +81,9 @@ public class ContractFileManager {
             BufferedWriter bufferedWriter = new BufferedWriter(contractWriter);
 
             if(contract instanceof SalesContract){
-                bufferedWriter.write("\n" + contract);
+                bufferedWriter.write("\n" + ((SalesContract) contract).toStringLog());
             } else if(contract instanceof  LeaseContract){
-                bufferedWriter.write("\n" + contract);
+                bufferedWriter.write("\n" + ((LeaseContract) contract).toStringLog());
             }
 
 

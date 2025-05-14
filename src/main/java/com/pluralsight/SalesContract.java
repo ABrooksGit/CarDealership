@@ -1,6 +1,8 @@
 package com.pluralsight;
 
 
+import java.text.NumberFormat;
+
 public class SalesContract extends Contract {
 
 
@@ -105,9 +107,22 @@ public class SalesContract extends Contract {
 
     @Override
     public String toString() {
-        return String.format("SALE|%s|%s|%s|%s|%s|%s|%s|%s|%.2f|%.2f",
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
+        String dollarSign = currencyFormatter.format(getTotalPrice());
+
+        return String.format("SALE  %s  %s  %s  %s  %s  %s  %s  %s  %s %.2f",
                 getDate(), getCustomerName(), getCustomerEmail(),
                 getVehicle(), salesTax, recordingFee, processingFee,
+                finance, dollarSign, getMonthlyPayment());
+    }
+
+
+
+
+    public String toStringLog() {
+        return String.format("SALE|%s|%s|%s|%s|%s|%s|%s|%s|%.2f|%.2f",
+                getDate(), getCustomerName(), getCustomerEmail(),
+                getVehicle().toStringLog(), salesTax, recordingFee, processingFee,
                 finance, getTotalPrice(), getMonthlyPayment());
     }
 
