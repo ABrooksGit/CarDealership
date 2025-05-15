@@ -4,13 +4,14 @@ import java.util.ArrayList;
 
 public class AdminUserInterface {
 
-
+    private  Dealership d;
     private  ArrayList<Contract> c = new ArrayList<>();
     private final  Console console = new Console();
 
 
     private  void init(){
         c = ContractFileManager.getContracts();
+        d = DealershipFileManager.getDealership();
 
 
     }
@@ -107,23 +108,31 @@ public class AdminUserInterface {
     }
 
     private void processVehicleByLease(){
-        String date = console.promptForString("Enter the Date");
-        String name = console.promptForString("Enter your name");
-        String email = console.promptForString("Enter your email");
+        String date = console.promptForString("Enter the Date: ");
+        String name = console.promptForString("Enter your name: ");
+        String email = console.promptForString("Enter your email: ");
         System.out.println("Enter vehicle information");
         int vin = console.promptForInt("Enter VIN: ");
-        int year = console.promptForInt("Enter Year: ");
-        String  make = console.promptForString("Enter Make: ");
-        String model = console.promptForString("Enter Model: ");
-        String type = console.promptForString("Vehicle Type: ");
-        String color = console.promptForString("Enter Color: ");
-        int odometer = console.promptForInt("Enter Distance ");
-        double price = console.promptForDouble("Enter Price: ");
-        Vehicle vehicle = new Vehicle(vin, year, make, model, type, color, odometer, price);
-        LeaseContract leaseContract = new LeaseContract(date, name, email, vehicle, vehicle.getPrice(), vehicle.getPrice());
-        c.add(leaseContract);
-        displayLease(c);
-        ContractFileManager.saveContracts(leaseContract);
+
+
+
+
+        ArrayList<Vehicle> vinNumber = d.getVehicleByVinNumber(vin);
+        if(vinNumber.isEmpty()){
+            System.out.println( ColorCodes.RED + "No Vehicles with this Vin Number..." + ColorCodes.RESET);
+        }
+
+        for(Vehicle vehicle : vinNumber){
+            LeaseContract leaseContract = new LeaseContract(date, name, email, vehicle, vehicle.getPrice(), vehicle.getPrice());
+            c.add(leaseContract);
+            displayLease(c);
+            ContractFileManager.saveContracts(leaseContract);
+        }
+
+
+
+
+
     }
 
 
@@ -133,21 +142,33 @@ public class AdminUserInterface {
         String email = console.promptForString("Enter your email: ");
         System.out.println("Enter vehicle information: ");
         int vin = console.promptForInt("Enter VIN: ");
-        int year = console.promptForInt("Enter Year: ");
-        String  make = console.promptForString("Enter Make: ");
-        String model = console.promptForString("Enter Model: ");
-        String type = console.promptForString("Vehicle Type: ");
-        String color = console.promptForString("Enter Color: ");
-        int odometer = console.promptForInt("Enter Distance ");
-        double price = console.promptForDouble("Enter Price: ");
-        int finance = console.promptForInt("Do you want finance? Yes = 1. No = 0: ");
-        boolean financeSelected = (finance == 1);
-        Vehicle vehicle = new Vehicle(vin, year, make, model, type, color, odometer, price);
-        SalesContract salesContract = new SalesContract(date, name, email, vehicle,financeSelected,vehicle.getPrice());
-        c.add(salesContract);
 
-        displaySales(c);
-        ContractFileManager.saveContracts(salesContract);
+        ArrayList<Vehicle> vinNumber = d.getVehicleByVinNumber(vin);
+
+        if(vinNumber.isEmpty()){
+            System.out.println( ColorCodes.RED + "No Vehicles with this Vin Number..." + ColorCodes.RESET);
+        }
+
+        int finance = console.promptForInt("Do you want finance? Yes = 1. No = 0: ");
+        boolean financeSelected = finance == 1;
+
+
+        for(Vehicle vehicle : vinNumber){
+            SalesContract salesContract = new SalesContract(date, name, email, vehicle,financeSelected, vehicle.getPrice());
+            c.add(salesContract);
+            displaySales(c);
+            ContractFileManager.saveContracts(salesContract);
+            d.removeVehicle(vehicle);
+            DealershipFileManager.saveDealership(d);
+
+        }
+
+
+
+
+
+
+
 
 
 
@@ -159,3 +180,21 @@ public class AdminUserInterface {
 
 
 }
+
+
+//        int year = console.promptForInt("Enter Year: ");
+//        String  make = console.promptForString("Enter Make: ");
+//        String model = console.promptForString("Enter Model: ");
+//        String type = console.promptForString("Vehicle Type: ");
+//        String color = console.promptForString("Enter Color: ");
+//        int odometer = console.promptForInt("Enter Distance ");
+//        double price = console.promptForDouble("Enter Price: ");
+//Vehicle vehicle = new Vehicle(vin, year, make, model, type, color, odometer, price);
+
+//        int year = console.promptForInt("Enter Year: ");
+//        String  make = console.promptForString("Enter Make: ");
+//        String model = console.promptForString("Enter Model: ");
+//        String type = console.promptForString("Vehicle Type: ");
+//        String color = console.promptForString("Enter Color: ");
+//        int odometer = console.promptForInt("Enter Distance ");
+//        double price = console.promptForDouble("Enter Price: ");

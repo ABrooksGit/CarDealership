@@ -10,6 +10,13 @@ public class Dealership {
 
     private final ArrayList<Vehicle> inventory;
 
+    public Dealership(String name, String address, String phone) {
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.inventory = new ArrayList<>();
+
+    }
 
     public String getName() {
         return name;
@@ -21,14 +28,6 @@ public class Dealership {
 
     public String getPhone() {
         return phone;
-    }
-
-    public Dealership(String name, String address, String phone) {
-        this.name = name;
-        this.address = address;
-        this.phone = phone;
-        this.inventory = new ArrayList<>();
-
     }
 
     public ArrayList<Vehicle> getVehicleByVinNumber(int vin) {
