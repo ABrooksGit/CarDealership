@@ -41,10 +41,10 @@ public class ContractFileManager {
                     int odometer = Integer.parseInt(contractParts[10]);
                     double price = Double.parseDouble(contractParts[11]);
                     double processingFee = Double.parseDouble(contractParts[12]);
-                    boolean finance = Boolean.parseBoolean(contractParts[13]);
+                    boolean finance = Boolean.parseBoolean(contractParts[16]);
 
                     vehicle = new Vehicle(vin, year,make,model,vehicleType,color,odometer,price);
-                    contracts.add(new SalesContract(date, name, email, vehicle, processingFee, finance));
+                    contracts.add(new SalesContract(date, name, email, vehicle, finance, processingFee));
 
 
                 } else if (contractParts[0].startsWith("LEASE")) {

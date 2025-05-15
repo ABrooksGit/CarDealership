@@ -39,7 +39,7 @@ public class UserInterface {
 
     private void displayContracts(ArrayList<Contract> contracts){
         for(Contract c : contracts){
-            System.out.println(c);
+            System.out.println(c.toString());
         }
 
 
@@ -339,7 +339,7 @@ public class UserInterface {
         int finance = console.promptForInt("Do you want finance? Yes = 1. No = 0;");
         boolean financeSelected = (finance == 1);
         Vehicle vehicle = new Vehicle(vin, year, make, model, type, color, odometer, price);
-        SalesContract salesContract = new SalesContract(date, name, email, vehicle, vehicle.getPrice(), financeSelected);
+        SalesContract salesContract = new SalesContract(date, name, email, vehicle,financeSelected,vehicle.getPrice());
         c.add(salesContract);
         System.out.println(SalesContract.getFormattedHeader());
         displayContracts(c);

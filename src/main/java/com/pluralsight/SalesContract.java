@@ -11,7 +11,7 @@ public class SalesContract extends Contract {
     private double processingFee;
     private boolean finance;
 
-    public SalesContract(String date, String customerName, String customerEmail, Vehicle vehicle, double processingFee, boolean finance) {
+    public SalesContract(String date, String customerName, String customerEmail, Vehicle vehicle,boolean finance, double processingFee) {
         super("Sales", date, customerName, customerEmail, vehicle);
         this.salesTax = 0.05;
         this.recordingFee = 100;
@@ -112,7 +112,7 @@ public class SalesContract extends Contract {
         String dollarSign = currencyFormatter.format(getTotalPrice());
 
 
-        return String.format("%-12s  %-20s  %-37s  %-80s  %-9s  %-14s  %-14s  %-7s  %-14s %-16.2f",
+        return String.format("%-12s  %-20s  %-37s  %-80s  %-9s  %-14s  %-14s  %-14s  %-7s  %-16.2f",
                 getDate(),
                 getCustomerName(),
                 getCustomerEmail(),
@@ -120,15 +120,15 @@ public class SalesContract extends Contract {
                 salesTax,
                 recordingFee,
                 processingFee,
-                finance,
                 dollarSign,
+                finance,
                 getMonthlyPayment());
     }
 
     public static String getFormattedHeader() {
         return """
-    Date        | Name                 | Email                                 | Vehicle Information List ---------------------------------------------------------------------------->| Sales Tax | Recording Fee  | Processing Fee | Finance | Total Price   | Monthly Payment
-    ----------- | -------------------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------- | --------- | -------------- | -------------- | ------- | ------------- | ----------------
+    Date        | Name                 | Email                                 | Vehicle Information List ---------------------------------------------------------------------------->| Sales Tax | Recording Fee  | Processing Fee | Total Price  | Finance | Monthly Payment
+    ----------- | -------------------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------- | --------- | -------------- | -------------- | -------------| ------- | ----------------
     """;
     }
 

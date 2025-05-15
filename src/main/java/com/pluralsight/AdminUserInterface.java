@@ -23,9 +23,17 @@ public class AdminUserInterface {
 
     private void displayContracts(ArrayList<Contract> contracts){
 
+
         for (Contract c : contracts){
             System.out.println(c);
         }
+
+
+
+    }
+
+    private void displayAllContacts(){
+        displayContracts(c);
 
 
 
@@ -114,7 +122,6 @@ public class AdminUserInterface {
         Vehicle vehicle = new Vehicle(vin, year, make, model, type, color, odometer, price);
         LeaseContract leaseContract = new LeaseContract(date, name, email, vehicle, vehicle.getPrice(), vehicle.getPrice());
         c.add(leaseContract);
-        System.out.println(LeaseContract.getFormattedHeader());
         displayLease(c);
         ContractFileManager.saveContracts(leaseContract);
     }
@@ -136,9 +143,9 @@ public class AdminUserInterface {
         int finance = console.promptForInt("Do you want finance? Yes = 1. No = 0: ");
         boolean financeSelected = (finance == 1);
         Vehicle vehicle = new Vehicle(vin, year, make, model, type, color, odometer, price);
-        SalesContract salesContract = new SalesContract(date, name, email, vehicle, vehicle.getPrice(), financeSelected);
+        SalesContract salesContract = new SalesContract(date, name, email, vehicle,financeSelected,vehicle.getPrice());
         c.add(salesContract);
-        System.out.println(SalesContract.getFormattedHeader());
+
         displaySales(c);
         ContractFileManager.saveContracts(salesContract);
 
@@ -147,12 +154,7 @@ public class AdminUserInterface {
 
     }
 
-    private void displayAllContacts(){
-        displayContracts(c);
 
-
-
-    }
 
 
 
