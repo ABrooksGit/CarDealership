@@ -136,10 +136,10 @@ public class SalesContract extends Contract {
 
 
     public String toStringLog() {
-        return String.format("SALE|%s|%s|%s|%s|%s|%s|%s|%s|%.2f|%.2f",
+        return String.format("SALE|%s|%s|%s|%s|%s|%s|%s|%.2f|%s|%.2f",
                 getDate(), getCustomerName(), getCustomerEmail(),
                 getVehicle().toStringLog(), salesTax, recordingFee, processingFee,
-                finance, getTotalPrice(), getMonthlyPayment());
+                getTotalPrice(), finance,  getMonthlyPayment());
     }
 
 
