@@ -63,6 +63,17 @@ public class Vehicle {
 
         return String.format(
                 "%-7s %-8s %-12s %-15s %-12s %-10s %-10s %-11s",
+                vin, year, make, model, vehicleType, color, odometer, ColorCodes.BLUE + dollarSign + ColorCodes.RESET
+        );
+    }
+
+    public String toStringTwo() {
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
+        String dollarSign = currencyFormatter.format(price);
+
+        // Adjust the format to match your desired column alignment
+        return String.format(
+                "%-10s %-15s %-12s %-12s %-10s %-10s %-18s %-15s",
                 vin, year, make, model, vehicleType, color, odometer, dollarSign
         );
     }

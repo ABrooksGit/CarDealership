@@ -1,5 +1,6 @@
 package com.pluralsight;
 
+
 public abstract class Contract {
 
     private String contracts;
@@ -70,9 +71,19 @@ public abstract class Contract {
     }
 
 
+
+
+
+
+
+
+
+
     public abstract double getMonthlyPayment();
 
     public abstract double getTotalPrice();
+
+
 
 
 

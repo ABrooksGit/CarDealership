@@ -8,7 +8,7 @@ public class UserInterface {
 
 
     private  Dealership d;
-    private  Contract c;
+    private  ArrayList<Contract> c = new ArrayList<>();
     private final  Console console = new Console();
 
 
@@ -37,10 +37,10 @@ public class UserInterface {
 
     }
 
-    private void displayContracts(Contract contracts){
-
-        for (int i = 0; i < 1; i++)
+    private void displayContracts(ArrayList<Contract> contracts){
+        for(Contract c : contracts){
             System.out.println(c);
+        }
 
 
     }
@@ -60,6 +60,8 @@ public class UserInterface {
                  7 - List ALL vehicles
                  8 - Add a vehicle
                  9 - Remove a vehicle
+                 10- Create A Sale
+                 11- Create A Lease
                  0 - Quit
                 Enter your command(number 1-9):\s""";
 
@@ -309,21 +311,23 @@ public class UserInterface {
         Vehicle vehicle = new Vehicle(vin, year, make, model, type, color, odometer, price);
 
 
-        c = new LeaseContract(date, name, email, vehicle, vehicle.getPrice(), vehicle.getPrice());
+        LeaseContract leaseContract = new LeaseContract(date, name, email, vehicle, vehicle.getPrice(), vehicle.getPrice());
+        c.add(leaseContract);
+        System.out.println(LeaseContract.getFormattedHeader());
         displayContracts(c);
 
 
-        ContractFileManager.saveContracts(c);
+        ContractFileManager.saveContracts(leaseContract);
     }
 
 
 
 
     private void processVehicleBySale(){
-        String date = console.promptForString("Enter the Date");
-        String name = console.promptForString("Enter your name");
-        String email = console.promptForString("Enter your email");
-        System.out.println("Enter vehicle information");
+        String date = console.promptForString("Enter the Date: ");
+        String name = console.promptForString("Enter your name: ");
+        String email = console.promptForString("Enter your email: ");
+        System.out.println("Enter vehicle information: ");
         int vin = console.promptForInt("Enter VIN: ");
         int year = console.promptForInt("Enter Year: ");
         String  make = console.promptForString("Enter Make: ");
@@ -335,9 +339,11 @@ public class UserInterface {
         int finance = console.promptForInt("Do you want finance? Yes = 1. No = 0;");
         boolean financeSelected = (finance == 1);
         Vehicle vehicle = new Vehicle(vin, year, make, model, type, color, odometer, price);
-        c = new SalesContract(date, name, email, vehicle, vehicle.getPrice(), financeSelected);
+        SalesContract salesContract = new SalesContract(date, name, email, vehicle, vehicle.getPrice(), financeSelected);
+        c.add(salesContract);
+        System.out.println(SalesContract.getFormattedHeader());
         displayContracts(c);
-        ContractFileManager.saveContracts(c);
+        ContractFileManager.saveContracts(salesContract);
 
 
 

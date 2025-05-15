@@ -25,6 +25,7 @@ public class SalesContract extends Contract {
 
     }
 
+
     public void setSalesTax(double salesTax) {
         this.salesTax = salesTax;
     }
@@ -110,10 +111,25 @@ public class SalesContract extends Contract {
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
         String dollarSign = currencyFormatter.format(getTotalPrice());
 
-        return String.format("SALE  %s  %s  %s  %s  %s  %s  %s  %s  %s %.2f",
-                getDate(), getCustomerName(), getCustomerEmail(),
-                getVehicle(), salesTax, recordingFee, processingFee,
-                finance, dollarSign, getMonthlyPayment());
+
+        return String.format("%-12s  %-20s  %-37s  %-80s  %-9s  %-14s  %-14s  %-7s  %-14s %-16.2f",
+                getDate(),
+                getCustomerName(),
+                getCustomerEmail(),
+                getVehicle().toStringTwo(),
+                salesTax,
+                recordingFee,
+                processingFee,
+                finance,
+                dollarSign,
+                getMonthlyPayment());
+    }
+
+    public static String getFormattedHeader() {
+        return """
+    Date        | Name                 | Email                                 | Vehicle Information List ---------------------------------------------------------------------------->| Sales Tax | Recording Fee  | Processing Fee | Finance | Total Price   | Monthly Payment
+    ----------- | -------------------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------- | --------- | -------------- | -------------- | ------- | ------------- | ----------------
+    """;
     }
 
 

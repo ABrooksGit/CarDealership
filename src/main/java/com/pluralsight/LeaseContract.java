@@ -74,11 +74,22 @@ public class LeaseContract extends Contract {
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
         String dollarSign = currencyFormatter.format(getTotalPrice());
 
-        return String.format("LEASE %-7s  %-8s %-12s %-15s %-12s %-18.2f",
-                getDate(), getCustomerName(), getCustomerEmail(),
-                getVehicle(), dollarSign, getMonthlyPayment());
+
+        return String.format("%-12s  %-20s  %-35s  %-70s  %-15s  %-16.2f",
+                getDate(),
+                getCustomerName(),
+                getCustomerEmail(),
+                getVehicle().toStringTwo(),
+                dollarSign,
+                getMonthlyPayment());
     }
 
+    public static String getFormattedHeader() {
+        return """
+            Date       | Name                | Email                                 | Vehicle Information List -------------------------------------------------------------------------------> | Total Price   | Monthly payment
+            -----------|---------------------|---------------------------------------|-----------------------------------------------------------------------------------------------------------|---------------|------------------
+            """;
+    }
 
 
 
@@ -90,15 +101,7 @@ public class LeaseContract extends Contract {
 
 
 
-    public static String getFormattedHeader() {
-        return """
-                 Date    Name       Email         Vehicles    Total Price   Monthly payment
-                 -------|--------|------------|---------------|------------|------------------|
-                """;
-    }
 }
-
-
 
 
 
