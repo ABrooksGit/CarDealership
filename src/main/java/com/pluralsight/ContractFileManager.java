@@ -28,6 +28,8 @@ public class ContractFileManager {
 
 
                 String[] contractParts = contractCVS.split(Pattern.quote("|"));
+                //SALE|20210928|Dana Wyatt|dana@texas.com|10112|1993|Ford|Explorer|SUV|Red|525123|995.00|49.75|100.00|295.00|1439.75|false|0.00
+                //0    1        2          3              4     5    6    7        8   9   10     11     12    13     14     15      16    17
                 if (contractParts[0].startsWith("SALE")) {
                     String date = contractParts[1];
                     String name = contractParts[2];
@@ -40,8 +42,12 @@ public class ContractFileManager {
                     String color = contractParts[9];
                     int odometer = Integer.parseInt(contractParts[10]);
                     double price = Double.parseDouble(contractParts[11]);
-                    double processingFee = Double.parseDouble(contractParts[12]);
+                    double salesTax = Double.parseDouble((contractParts[12]));
+                    double recordingFee = Double.parseDouble((contractParts[13]));
+                    double processingFee = Double.parseDouble(contractParts[14]);
+                    double totalPrice = Double.parseDouble(contractParts[15]);
                     boolean finance = Boolean.parseBoolean(contractParts[16]);
+                    double monthlyPayment = Double.parseDouble(contractParts[17]);
 
                     vehicle = new Vehicle(vin, year,make,model,vehicleType,color,odometer,price);
                     contracts.add(new SalesContract(date, name, email, vehicle, finance, processingFee));
@@ -63,6 +69,7 @@ public class ContractFileManager {
                     double originalPrice = Double.parseDouble(contractParts[13]);
 
                     vehicle = new Vehicle(vin,year,make,model,vehicleType,color,odometer,price);
+
                     contracts.add(new LeaseContract(date, name, email, vehicle, totalVehiclePrice, originalPrice));
 
                 }
@@ -88,27 +95,13 @@ public class ContractFileManager {
                 bufferedWriter.write("\n" + ((LeaseContract) contract).toStringLog());
             }
 
-
-
-
             bufferedWriter.close();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
 }

@@ -12,9 +12,12 @@ public class UserInterface {
     private final Console console = new Console();
 
 
+
+
     private void init() {
         d = DealershipFileManager.getDealership();
         c = ContractFileManager.getContracts();
+
 
 
     }
@@ -30,14 +33,6 @@ public class UserInterface {
 
         for (Vehicle v : vehicles)
             System.out.println(v.toString());
-
-    }
-
-    private void displayContracts(ArrayList<Contract> contracts) {
-        for (Contract c : contracts) {
-            System.out.println(c.toString());
-        }
-
 
     }
 
@@ -82,7 +77,7 @@ public class UserInterface {
                  10- Create A Sale
                  11- Create A Lease
                  0 - Quit
-                Enter your command(number 1-9):\s""";
+                Enter your command(number 1-11):\s""";
 
 
         do {
@@ -368,25 +363,3 @@ public class UserInterface {
     }
 
 }
-
-
-
-//        int year = console.promptForInt("Enter Year: ");
-//        String  make = console.promptForString("Enter Make: ");
-//        String model = console.promptForString("Enter Model: ");
-//        String type = console.promptForString("Vehicle Type: ");
-//        String color = console.promptForString("Enter Color: ");
-//        int odometer = console.promptForInt("Enter Distance ");
-//        double price = console.promptForDouble("Enter Price: ");
-
-
-
-
-//        int year = console.promptForInt("Enter Year: ");
-//        String  make = console.promptForString("Enter Make: ");
-//        String model = console.promptForString("Enter Model: ");
-//        String type = console.promptForString("Vehicle Type: ");
-//        String color = console.promptForString("Enter Color: ");
-//        int odometer = console.promptForInt("Enter Distance ");
-//        double price = console.promptForDouble("Enter Price: ");
-//Vehicle vehicle = new Vehicle(vin, year, make, model, type, color, odometer, price);
